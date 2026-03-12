@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Image } from 'expo-image';
 
-const SplashScreen = ({ navigation }) => {
+export default function SplashScreen() {
+  const router = useRouter();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.3)).current;
 
@@ -23,11 +26,11 @@ const SplashScreen = ({ navigation }) => {
     // Navigate after 3 seconds
     const timer = setTimeout(() => {
       const isLoggedIn = isUserLoggedIn();
-      navigation.replace(isLoggedIn ? 'Home' : 'Login');
+      router.replace(isLoggedIn ? '/(tabs)' : '/login');
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, [navigation, fadeAnim, scaleAnim]);
+  }, [router, fadeAnim, scaleAnim]);
 
   return (
     <View style={styles.container}>
@@ -40,14 +43,18 @@ const SplashScreen = ({ navigation }) => {
           },
         ]}
       >
-        <View style={styles.logo}>
-          <Text style={styles.logoText}>MC</Text>
+        <View style={styles.logoContainer}>
+          <Image
+            source={require('@/assets/images/logo.png')}
+            style={styles.logo}
+            contentFit="contain"
+          />
         </View>
         <Text style={styles.appName}>ManamCare</Text>
       </Animated.View>
     </View>
   );
-};
+}
 
 // Mock function - replace with actual auth logic
 const isUserLoggedIn = () => {
@@ -65,7 +72,7 @@ const styles = StyleSheet.create({
   content: {
     alignItems: 'center',
   },
-  logo: {
+  logoContainer: {
     width: 120,
     height: 120,
     borderRadius: 60,
@@ -78,11 +85,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
+    overflow: 'hidden',
   },
-  logoText: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    color: '#6A0DAD',
+  logo: {
+    width: 100,
+    height: 100,
   },
   appName: {
     fontSize: 32,
@@ -91,5 +98,3 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
 });
-
-export default SplashScreen;
