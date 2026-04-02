@@ -52,7 +52,7 @@ const AnimatedCard = ({ children, onPress, style }: any) => {
   );
 };
 
-export default function ResourcesTabScreen() {
+export default function ResourcesScreen() {
   const router = useRouter();
   const [resources, setResources] = useState<Resource[]>([]);
   const [filteredResources, setFilteredResources] = useState<Resource[]>([]);

@@ -122,3 +122,13 @@ export const logout = async () => {
     console.error('Logout error:', error);
   }
 };
+
+export const getResources = async () => {
+  try {
+    const res = await api.get('/resources');
+    return res.data;
+  } catch (error) {
+    console.error('Resources fetch error:', error);
+    throw error;
+  }
+};
